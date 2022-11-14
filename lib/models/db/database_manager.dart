@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:twitter_clone/data_models/post.dart';
 import "../../data_models/user.dart";
 
 class DatabaseManager {
@@ -24,5 +25,9 @@ class DatabaseManager {
     final query =
         await _db.collection('users').where("userId", isEqualTo: userId).get();
     return User.fromMap(query.docs[0].data());
+  }
+
+  Future<void> insertPost(Post post) async {
+    await _db.collection("posts").doc(post.postId).set(post.toMap());
   }
 }

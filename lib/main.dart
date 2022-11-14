@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:twitter_clone/di/providers.dart';
 import 'package:twitter_clone/firebase_options.dart';
+import 'package:twitter_clone/view/post/tweet_form_screen.dart';
 import 'package:twitter_clone/view_models/login_view_model.dart';
 
 import 'screens/home_screen.dart';
@@ -48,6 +49,12 @@ class MyApp extends StatelessWidget {
         path: '/login',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginScreen();
+        },
+      ),
+      GoRoute(
+        path: '/new',
+        builder: (BuildContext context, GoRouterState state) {
+          return const TweetFormScreen();
         },
       ),
     ],

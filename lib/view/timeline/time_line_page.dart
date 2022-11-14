@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:go_router/go_router.dart';
 
 class TimeLinePage extends StatelessWidget {
   const TimeLinePage({super.key});
@@ -9,10 +10,10 @@ class TimeLinePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('TimeLine'),
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push('/new'),
         backgroundColor: Colors.blue,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

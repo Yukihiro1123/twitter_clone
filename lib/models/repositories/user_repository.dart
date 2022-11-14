@@ -7,6 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 class UserRepository {
   final DatabaseManager dbManager;
   UserRepository({required this.dbManager});
+  //サインイン処理をして、サインインされたユーザーを db に登録して、
+  //登録されたらユーザーを static 変数に入れる
   static User? currentUser;
   // To create a new Firebase Auth instance, call the instance getter on FirebaseAuth:
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;

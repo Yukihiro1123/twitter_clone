@@ -2,8 +2,10 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../models/db/database_manager.dart';
+import '../models/repositories/post_repository.dart';
 import '../models/repositories/user_repository.dart';
 import '../view_models/login_view_model.dart';
+import '../view_models/post_view_model.dart';
 import '../view_models/profile_view_model.dart';
 
 //...はoperator 配列に変数の要素を挿入
@@ -29,6 +31,9 @@ List<SingleChildWidget> dependentModels = [
   ProxyProvider<DatabaseManager, UserRepository>(
     update: (_, dbManager, repo) => UserRepository(dbManager: dbManager),
   ),
+  ProxyProvider<DatabaseManager, PostRepository>(
+    update: (_, dbManager, repo) => PostRepository(dbManager: dbManager),
+  ),
 ];
 
 List<SingleChildWidget> viewModels = [
@@ -40,6 +45,12 @@ List<SingleChildWidget> viewModels = [
   ChangeNotifierProvider<ProfileViewModel>(
     create: (context) => ProfileViewModel(
       userRepository: context.read<UserRepository>(),
+    ),
+  ),
+  ChangeNotifierProvider<PostViewModel>(
+    create: (context) => PostViewModel(
+      userRepository: context.read<UserRepository>(),
+      postRepository: context.read<PostRepository>(),
     ),
   ),
 ];

@@ -66,3 +66,5 @@ sha-1
 
 cd android
 ./gradlew signingReport
+
+https://zenn.dev/ryouhei_furugen/articles/2fa82ba62c88da

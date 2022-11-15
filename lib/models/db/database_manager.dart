@@ -51,6 +51,18 @@ class DatabaseManager {
     await _db.collection("likes").doc(like.likeId).set(like.toMap());
   }
 
+  Future<void> unLikeIt(Post post, User currentUser) async {
+    final likeRef = await _db
+        .collection("likes")
+        .where("postId", isEqualTo: post.postId)
+        .where("likeUserId", isEqualTo: currentUser.userId)
+        .get();
+    likeRef.docs.forEach((element) async {
+      final ref = _db.collection("likes").doc(element.id);
+      await ref.delete();
+    });
+  }
+
   Future<List<Like>> getLikes(String postId) async {
     //データがあるかどうかの判定
     final query = await _db.collection("likes").get();

@@ -40,5 +40,8 @@ class TimelineViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> unlikeIt(Post post) async {}
+  Future<void> unlikeIt(Post post) async {
+    await postRepository.unLikeIt(post, currentUser);
+    notifyListeners();
+  }
 }

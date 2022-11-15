@@ -50,5 +50,8 @@ class TimelineLikesPart extends StatelessWidget {
     await timelineViewModel.likeIt(post);
   }
 
-  _unlikeIt(BuildContext context) async {}
+  _unlikeIt(BuildContext context) async {
+    final timelineViewModel = context.read<TimelineViewModel>();
+    await timelineViewModel.unlikeIt(post);
+  }
 }

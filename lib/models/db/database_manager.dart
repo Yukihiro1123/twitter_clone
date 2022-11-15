@@ -5,6 +5,7 @@ import "../../data_models/user.dart";
 
 class DatabaseManager {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   Future<bool> searchUserInDb(auth.User firebaseUser) async {
     final query = await _db
         .collection('user')
@@ -30,4 +31,20 @@ class DatabaseManager {
   Future<void> insertPost(Post post) async {
     await _db.collection("posts").doc(post.postId).set(post.toMap());
   }
+
+  //タイムライン画面
+  Future<List<Post>> getPosts() async {
+    final query = await _db
+        .collection('posts')
+        .orderBy("postDateTime", descending: true)
+        .get();
+    if (query.docs.isEmpty) return [];
+    var results = <Post>[];
+    query.docs.forEach((element) {
+      results.add(Post.fromMap(element.data()));
+    });
+    return results;
+  }
+  //プロフィール画面
+
 }

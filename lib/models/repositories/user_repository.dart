@@ -87,4 +87,8 @@ class UserRepository {
     await _auth.signOut();
     currentUser = null;
   }
+
+  Future<User> getUserById(String userId) async {
+    return await dbManager.getUserInfoFromDbById(userId);
+  }
 }

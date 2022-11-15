@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _pages = [
-      const TimeLinePage(),
+      const TimelinePage(),
       const LikesPage(),
       const ProfilePage(),
     ];
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           items: const [
             BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.house),
-              label: "TimeLine",
+              label: "Timeline",
             ),
             BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.heart),

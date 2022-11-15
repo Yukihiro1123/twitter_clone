@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:twitter_clone/view_models/timeline_view_model.dart';
 
 import '../models/db/database_manager.dart';
 import '../models/repositories/post_repository.dart';
@@ -53,4 +54,10 @@ List<SingleChildWidget> viewModels = [
       postRepository: context.read<PostRepository>(),
     ),
   ),
+  ChangeNotifierProvider<TimelineViewModel>(
+    create: (context) => TimelineViewModel(
+      userRepository: context.read<UserRepository>(),
+      postRepository: context.read<PostRepository>(),
+    ),
+  )
 ];

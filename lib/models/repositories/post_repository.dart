@@ -18,4 +18,8 @@ class PostRepository {
     );
     await dbManager.insertPost(post);
   }
+
+  Future<List<Post>> getPosts() async {
+    return dbManager.getPosts();
+  }
 }

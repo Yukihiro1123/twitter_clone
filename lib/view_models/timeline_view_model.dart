@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data_models/like.dart';
 import '../data_models/post.dart';
 import '../data_models/user.dart';
 import '../models/repositories/post_repository.dart';
@@ -29,4 +30,15 @@ class TimelineViewModel extends ChangeNotifier {
   Future<User> getPostUserInfo(String userId) async {
     return await userRepository.getUserById(userId);
   }
+
+  Future<LikeResult> getLikeResult(postId) async {
+    return await postRepository.getLikeResult(postId, currentUser);
+  }
+
+  Future<void> likeIt(Post post) async {
+    await postRepository.likeIt(post, currentUser);
+    notifyListeners();
+  }
+
+  Future<void> unlikeIt(Post post) async {}
 }

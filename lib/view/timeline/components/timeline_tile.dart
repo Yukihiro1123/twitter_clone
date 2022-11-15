@@ -56,7 +56,7 @@ class TimelineTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(post.tweetText, style: postCaptionTextStyle),
-                      TimelineLikesPart(),
+                      TimelineLikesPart(postUser: postUser, post: post),
                     ],
                   ),
                 ),

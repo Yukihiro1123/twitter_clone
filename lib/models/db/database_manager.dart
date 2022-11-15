@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:twitter_clone/data_models/like.dart';
 import 'package:twitter_clone/data_models/post.dart';
 import "../../data_models/user.dart";
 
@@ -45,6 +46,28 @@ class DatabaseManager {
     });
     return results;
   }
-  //プロフィール画面
 
+  Future<void> likeIt(Like like) async {
+    await _db.collection("likes").doc(like.likeId).set(like.toMap());
+  }
+
+  Future<List<Like>> getLikes(String postId) async {
+    //データがあるかどうかの判定
+    final query = await _db.collection("likes").get();
+    if (query.docs.isEmpty) return [];
+    var results = <Like>[];
+    await _db
+        .collection("likes")
+        .where("postId", isEqualTo: postId)
+        .orderBy("likeDateTime")
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        results.add(Like.fromMap(element.data()));
+      });
+    });
+    return results;
+  }
+
+  //プロフィール画面
 }

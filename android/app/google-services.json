@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:292395443061:android:bb19e9e0901e2a83fb293c",
+        "mobilesdk_app_id": "1:292395443061:android:fbb6118f1cbc1960fb293c",
         "android_client_info": {
-          "package_name": "com.example.twitter_clone"
+          "package_name": "com.example.twitterCloneYuki"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "292395443061-gekt191vicqvnkpftq4c0j6mjtg0m9jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twitterCloneYuki",
+            "certificate_hash": "cedc4fec25b4c6ba5e00122798c8d44bd307e1dc"
+          }
+        },
         {
           "client_id": "292395443061-ih8hlt0mi0b5qqrqpu9lqoo9kcqpso7d.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +37,57 @@
             {
               "client_id": "292395443061-ih8hlt0mi0b5qqrqpu9lqoo9kcqpso7d.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "292395443061-51jf7a7lrlrfonom2k3nju5joul8laiu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.twitterCloneYuki"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292395443061:android:bb19e9e0901e2a83fb293c",
+        "android_client_info": {
+          "package_name": "com.example.twitter_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292395443061-o1537r2rd21k06k7c356e1hm4unbpm6e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twitter_clone",
+            "certificate_hash": "cedc4fec25b4c6ba5e00122798c8d44bd307e1dc"
+          }
+        },
+        {
+          "client_id": "292395443061-ih8hlt0mi0b5qqrqpu9lqoo9kcqpso7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPuBR_RKKgBDDUgVb81vz9y-0rHmdYRNE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292395443061-ih8hlt0mi0b5qqrqpu9lqoo9kcqpso7d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "292395443061-51jf7a7lrlrfonom2k3nju5joul8laiu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.twitterCloneYuki"
+              }
             }
           ]
         }

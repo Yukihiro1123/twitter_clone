@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:uuid/uuid.dart';
+
 import '../../data_models/user.dart';
 import '../../utils/extensions.dart';
 import '../db/database_manager.dart';
@@ -90,5 +94,33 @@ class UserRepository {
 
   Future<User> getUserById(String userId) async {
     return await dbManager.getUserInfoFromDbById(userId);
+  }
+
+  Future<void> updateProfile(
+    User profileUser,
+    String nameUpdated,
+    String bioUpdated,
+    String photoUrlUpdated,
+    bool isImageFromFile,
+  ) async {
+    var updatePhotoUrl;
+    if (isImageFromFile) {
+      final updatePhotoFile = File(photoUrlUpdated);
+      final storagePath = const Uuid().v1();
+      updatePhotoUrl =
+          await dbManager.uploadImageToStorage(updatePhotoFile, storagePath);
+    }
+    final userBeforeUpdate =
+        await dbManager.getUserInfoFromDbById(profileUser.userId);
+    final updateUser = userBeforeUpdate.copyWith(
+      appUserName: nameUpdated,
+      photoUrl: isImageFromFile ? updatePhotoUrl : userBeforeUpdate.photoUrl,
+      bio: bioUpdated,
+    );
+    await dbManager.updateProfile(updateUser);
+  }
+
+  Future<void> getCurrentUserById(String userId) async {
+    currentUser = await dbManager.getUserInfoFromDbById(userId);
   }
 }

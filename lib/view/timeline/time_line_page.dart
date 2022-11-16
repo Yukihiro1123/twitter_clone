@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:twitter_clone/view/common/circle_photo.dart';
 
 import '../../view_models/timeline_view_model.dart';
 import 'components/timeline_tile.dart';
@@ -31,8 +30,9 @@ class TimelinePage extends StatelessWidget {
           );
         } else {
           return (model.posts == null)
-              ? Center(child: Text('Hello!!!'))
+              ? const Center(child: Text('Hello!!!'))
               : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: model.posts!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return TimelineTile(post: model.posts![index]);

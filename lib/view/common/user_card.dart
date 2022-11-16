@@ -6,14 +6,14 @@ import 'circle_photo.dart';
 class UserCard extends StatelessWidget {
   final String title;
   final String subTitle;
-  final String? photoUrl;
+  final String photoUrl;
   final Widget? trailing;
   final VoidCallback? onTap;
   const UserCard({
     super.key,
     required this.title,
     required this.subTitle,
-    this.photoUrl,
+    required this.photoUrl,
     this.trailing,
     this.onTap,
   });
@@ -24,7 +24,7 @@ class UserCard extends StatelessWidget {
       splashColor: Colors.blueGrey,
       onTap: onTap,
       child: ListTile(
-        leading: const CirclePhoto(),
+        leading: CirclePhoto(photoUrl: photoUrl),
         title: Text(title, style: userCardTitleTextStyle),
         subtitle: Text(subTitle, style: userCardSubTitleTextStyle),
         trailing: trailing,

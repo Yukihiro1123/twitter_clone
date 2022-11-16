@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twitter_clone/data_models/like.dart';
 import 'package:twitter_clone/data_models/post.dart';
 import "../../data_models/user.dart";
@@ -79,6 +82,21 @@ class DatabaseManager {
       });
     });
     return results;
+  }
+
+  uploadImageToStorage(File imageFile, String storageId) async {
+    //ストレージ上でファイル保存場所のリファレンスを取得
+    final storageRef = FirebaseStorage.instance.ref().child(storageId);
+    //上記のパスにファイルをアップロード
+    final uploadTask = storageRef.putFile(imageFile);
+    //アップロード処理が完了したらファイルのダウンロードURLを取得
+    return uploadTask
+        .then((TaskSnapshot snapshot) => snapshot.ref.getDownloadURL());
+  }
+
+  Future<void> updateProfile(User updateUser) async {
+    final reference = _db.collection("users").doc(updateUser.userId);
+    await reference.update(updateUser.toMap());
   }
 
   //プロフィール画面

@@ -35,6 +35,7 @@ class TimelineTile extends StatelessWidget {
                   title: postUser.appUserName,
                   subTitle:
                       DateFormat("yyyy-MM-dd-HH:mm").format(post.postDateTime),
+                  photoUrl: postUser.photoUrl,
                   trailing: PopupMenuButton(
                     itemBuilder: (BuildContext context) {
                       return [

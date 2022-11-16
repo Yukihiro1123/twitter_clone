@@ -5,6 +5,7 @@ import 'package:twitter_clone/view_models/timeline_view_model.dart';
 import '../models/db/database_manager.dart';
 import '../models/repositories/post_repository.dart';
 import '../models/repositories/user_repository.dart';
+
 import '../view_models/login_view_model.dart';
 import '../view_models/post_view_model.dart';
 import '../view_models/profile_view_model.dart';
@@ -46,6 +47,7 @@ List<SingleChildWidget> viewModels = [
   ChangeNotifierProvider<ProfileViewModel>(
     create: (context) => ProfileViewModel(
       userRepository: context.read<UserRepository>(),
+      postRepository: context.read<PostRepository>(),
     ),
   ),
   ChangeNotifierProvider<PostViewModel>(
@@ -59,5 +61,5 @@ List<SingleChildWidget> viewModels = [
       userRepository: context.read<UserRepository>(),
       postRepository: context.read<PostRepository>(),
     ),
-  )
+  ),
 ];

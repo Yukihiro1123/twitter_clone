@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:twitter_clone/data_models/user.dart';
 import 'package:uuid/uuid.dart';
 
@@ -8,6 +11,14 @@ import '../db/database_manager.dart';
 class PostRepository {
   final DatabaseManager dbManager;
   PostRepository({required this.dbManager});
+
+  Future<File?> pickImage() async {
+    final imagePicker = ImagePicker();
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    print("The path is ${pickedImage?.path}");
+    return (pickedImage != null) ? File(pickedImage.path) : null;
+  }
 
   Future<void> post(User currentUser, String tweetText) async {
     final storageId = const Uuid().v1();
@@ -27,7 +38,7 @@ class PostRepository {
   Future<void> likeIt(Post post, User currentUser) async {
     final like = Like(
       likeUserId: currentUser.userId,
-      likeId: Uuid().v1(),
+      likeId: const Uuid().v1(),
       postId: post.postId,
       likeDateTime: DateTime.now(),
     );

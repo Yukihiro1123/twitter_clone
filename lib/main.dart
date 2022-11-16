@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:twitter_clone/di/providers.dart';
 import 'package:twitter_clone/firebase_options.dart';
 import 'package:twitter_clone/view/post/tweet_form_screen.dart';
+import 'package:twitter_clone/view/profile/screens/edit_profile_screen.dart';
 import 'package:twitter_clone/view_models/login_view_model.dart';
 
 import 'screens/home_screen.dart';
@@ -63,6 +64,12 @@ class MyApp extends StatelessWidget {
         path: '/likes',
         builder: (BuildContext context, GoRouterState state) {
           return const LikesPage();
+        },
+      ),
+      GoRoute(
+        path: "/edit_profile",
+        builder: (BuildContext context, GoRouterState state) {
+          return const EditProfileScreen();
         },
       ),
     ],

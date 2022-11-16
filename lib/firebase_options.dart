@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +43,43 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDEdEolh3YjFGkJZOmse59W-DOorCXjPes',
+    appId: '1:292395443061:web:2cb941bd84d9c708fb293c',
+    messagingSenderId: '292395443061',
+    projectId: 'twitterclone-9a2bf',
+    authDomain: 'twitterclone-9a2bf.firebaseapp.com',
+    storageBucket: 'twitterclone-9a2bf.appspot.com',
+    measurementId: 'G-7WKPQDJCSC',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDPuBR_RKKgBDDUgVb81vz9y-0rHmdYRNE',
     appId: '1:292395443061:android:bb19e9e0901e2a83fb293c',
     messagingSenderId: '292395443061',
     projectId: 'twitterclone-9a2bf',
     storageBucket: 'twitterclone-9a2bf.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBOUu63hYa6SuC_TRDMBqafy-2IJsXDmrk',
+    appId: '1:292395443061:ios:fdacd5eb9f59e5a5fb293c',
+    messagingSenderId: '292395443061',
+    projectId: 'twitterclone-9a2bf',
+    storageBucket: 'twitterclone-9a2bf.appspot.com',
+    androidClientId: '292395443061-gekt191vicqvnkpftq4c0j6mjtg0m9jk.apps.googleusercontent.com',
+    iosClientId: '292395443061-51jf7a7lrlrfonom2k3nju5joul8laiu.apps.googleusercontent.com',
+    iosBundleId: 'com.example.twitterCloneYuki',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBOUu63hYa6SuC_TRDMBqafy-2IJsXDmrk',
+    appId: '1:292395443061:ios:193346f894417d0cfb293c',
+    messagingSenderId: '292395443061',
+    projectId: 'twitterclone-9a2bf',
+    storageBucket: 'twitterclone-9a2bf.appspot.com',
+    androidClientId: '292395443061-gekt191vicqvnkpftq4c0j6mjtg0m9jk.apps.googleusercontent.com',
+    iosClientId: '292395443061-mlc9obdflpfa4slr7qd1tgdq7p7r06f6.apps.googleusercontent.com',
+    iosBundleId: 'com.example.twitterClone',
   );
 }

@@ -6,6 +6,7 @@ import '../models/db/database_manager.dart';
 import '../models/repositories/post_repository.dart';
 import '../models/repositories/user_repository.dart';
 
+import '../view_models/like_view_model.dart';
 import '../view_models/login_view_model.dart';
 import '../view_models/post_view_model.dart';
 import '../view_models/profile_view_model.dart';
@@ -58,6 +59,12 @@ List<SingleChildWidget> viewModels = [
   ),
   ChangeNotifierProvider<TimelineViewModel>(
     create: (context) => TimelineViewModel(
+      userRepository: context.read<UserRepository>(),
+      postRepository: context.read<PostRepository>(),
+    ),
+  ),
+  ChangeNotifierProvider<LikeViewModel>(
+    create: (context) => LikeViewModel(
       userRepository: context.read<UserRepository>(),
       postRepository: context.read<PostRepository>(),
     ),

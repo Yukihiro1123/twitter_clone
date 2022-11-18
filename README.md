@@ -1,5 +1,23 @@
 # twitter_clone
 
+- いいねした投稿リスト表示（終了）
+
+## やること
+
+- いいねページの作成
+
+- メールアドレス・パスワード変更
+
+- 投稿データの削除（ユーザーが自分の時のみ）
+
+## ひとまず後回し
+
+- 認証（確認メール送信）
+
+- プロフィール編集（編集後にデータがすぐに反映されない）
+
+## メモ
+
 ```zsh
 flutter pub add firebase_core
 firebase login
@@ -23,16 +41,6 @@ User データ
 
 view_model -> repository -> dbmanager
 (changeNotifier)
-
-// Dynamic Links will start with https://twitterclone-9a2bf.web.app
-"appAssociation": "AUTO",
-"rewrites": [ { "source": "/**", "dynamicLinks": true } ]
-
-google-site-verification=eKDBC0wGSEZY-RgtKBLxgSOfXcOz2t78z_D5nByf6ZU
-
-Dynamic route
-
-yukitwitterclone.page.link
 
 AndroidManifest.xml
 
@@ -62,18 +70,9 @@ build.gradle
 
 ```
 
-sha-1
+sha-1 を取得するのに用いるコマンド
 
 cd android
 ./gradlew signingReport
 
 https://zenn.dev/ryouhei_furugen/articles/2fa82ba62c88da
-
-やること
-
-プロフィール編集（ひとまず終了）
-メールアドレス・パスワード変更
-
-いいねした投稿リスト表示
-
-投稿データの削除（ユーザーが自分の時のみ）

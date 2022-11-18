@@ -99,5 +99,51 @@ class DatabaseManager {
     await reference.update(updateUser.toMap());
   }
 
+  //いいねしたツイートのみ
+  // Future<List<Post>> getLikePost(String userId) async {
+
+  // }
+
   //プロフィール画面
+  Future<List<Post>> getPostsByUser(String userId) async {
+    final query = await _db.collection('posts').get();
+    if (query.docs.isEmpty) return [];
+    var results = <Post>[];
+    await _db
+        .collection("posts")
+        .where("userId", isEqualTo: userId)
+        .orderBy("postDateTime", descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        results.add(Post.fromMap(element.data()));
+      });
+    });
+    return results;
+  }
+
+  //いいねした投稿を取得
+  Future<List<Post>> getLikePosts(String userId) async {
+    var results = <Post>[];
+    //まずはlikesからユーザーがいいねした投稿を持ってくる
+    final query = await _db
+        .collection("likes")
+        .where("likeUserId", isEqualTo: userId)
+        .get();
+    var likeIds = <String>[];
+    query.docs.forEach((id) {
+      likeIds.add(id.data()['postId']);
+    });
+    await _db
+        .collection("posts")
+        .where("postId", whereIn: likeIds) //TODO 10件しか取ってこれない
+        .orderBy("postDateTime", descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        results.add(Post.fromMap(element.data()));
+      });
+    });
+    return results;
+  }
 }

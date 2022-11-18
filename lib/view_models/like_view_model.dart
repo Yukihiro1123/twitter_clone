@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 import '../data_models/like.dart';
 import '../data_models/post.dart';
@@ -7,10 +7,10 @@ import '../models/repositories/post_repository.dart';
 import '../models/repositories/user_repository.dart';
 import '../utils/constants.dart';
 
-class TimelineViewModel extends ChangeNotifier {
+class LikeViewModel extends ChangeNotifier {
   final UserRepository userRepository;
   final PostRepository postRepository;
-  TimelineViewModel({
+  LikeViewModel({
     required this.userRepository,
     required this.postRepository,
   });
@@ -18,13 +18,16 @@ class TimelineViewModel extends ChangeNotifier {
   bool isProcessing = false;
   List<Post>? posts = [];
   User? feedUser;
-
   User get currentUser => UserRepository.currentUser!;
+
+  void setProfileUser(User? selectedUser) {
+    feedUser = currentUser;
+  }
 
   Future<void> getPosts() async {
     isProcessing = true;
     notifyListeners();
-    posts = await postRepository.getPosts(FeedMode.timeline, feedUser);
+    posts = await postRepository.getPosts(FeedMode.likes, feedUser);
     isProcessing = false;
     notifyListeners();
   }

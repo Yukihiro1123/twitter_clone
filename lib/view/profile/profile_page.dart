@@ -2,10 +2,12 @@ import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:twitter_clone/utils/constants.dart';
 
 import '../../data_models/user.dart';
 import '../../view_models/profile_view_model.dart';
 import 'components/profile_detail_part.dart';
+import 'components/profile_posts_part.dart';
 
 class ProfilePage extends StatelessWidget {
   final User? selectedUser;
@@ -19,7 +21,9 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
     profileViewModel.setProfileUser(selectedUser);
-    Future(() => profileViewModel.getPost());
+    Future(() => profileViewModel.getPosts());
+    Future(() => profileViewModel.getLikePosts());
+
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -31,7 +35,6 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Consumer<ProfileViewModel>(
         builder: (context, model, child) {
-          final profileUser = model.profileUser;
           return DefaultTabController(
             length: 2,
             child: NestedScrollView(
@@ -43,7 +46,7 @@ class ProfilePage extends StatelessWidget {
                       [
                         Container(
                           color: Colors.white,
-                          child: ProfileDetailPart(),
+                          child: const ProfileDetailPart(),
                         )
                       ],
                     ),
@@ -70,15 +73,42 @@ class ProfilePage extends StatelessWidget {
                 children: <Widget>[
                   Center(
                     child: Column(
-                      children: const <Widget>[
-                        Text('Tweet'),
+                      children: <Widget>[
+                        (model.posts == null)
+                            ? const Center(child: Text('No Tweets yet.'))
+                            : Expanded(
+                                child: ListView.builder(
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  itemCount: model.posts!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ProfilePostsPart(
+                                        post: model.posts![index]);
+                                  },
+                                ),
+                              ),
                       ],
                     ),
                   ),
+                  //いいね
                   Center(
                     child: Column(
-                      children: const <Widget>[
-                        Text("Like"),
+                      children: <Widget>[
+                        (model.likePosts == null)
+                            ? const Center(child: Text('No Likes yet.'))
+                            : Expanded(
+                                child: ListView.builder(
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  itemCount: model.likePosts!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ProfilePostsPart(
+                                        post: model.likePosts![index]);
+                                  },
+                                ),
+                              ),
                       ],
                     ),
                   ),

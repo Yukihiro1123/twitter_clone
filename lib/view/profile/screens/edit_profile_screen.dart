@@ -68,7 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: Column(
                       children: <Widget>[
                         const SizedBox(height: 16.0),
-                        CirclePhoto(photoUrl: _photoUrl),
+                        CirclePhoto(photoUrl: _photoUrl, radius: 50),
                         const SizedBox(height: 16.0),
                         Center(
                           child: InkWell(

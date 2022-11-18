@@ -11,7 +11,6 @@ import 'package:twitter_clone/view_models/login_view_model.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'view/likes/likes_page.dart';
-import 'view/profile/profile_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -11,6 +11,6 @@ class ProfileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
     final profileUser = profileViewModel.profileUser;
-    return CirclePhoto(photoUrl: profileUser.photoUrl);
+    return CirclePhoto(photoUrl: profileUser.photoUrl, radius: 30);
   }
 }

@@ -30,7 +30,7 @@ class TimelinePage extends StatelessWidget {
           );
         } else {
           return (model.posts == null)
-              ? const Center(child: Text('Hello!!!'))
+              ? Container()
               : ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: model.posts!.length,

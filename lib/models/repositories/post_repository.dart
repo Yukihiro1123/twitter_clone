@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../data_models/like.dart';
 import '../../data_models/post.dart';
+import '../../utils/constants.dart';
 import '../db/database_manager.dart';
 
 class PostRepository {
@@ -31,8 +32,15 @@ class PostRepository {
     await dbManager.insertPost(post);
   }
 
-  Future<List<Post>> getPosts() async {
-    return dbManager.getPosts();
+  Future<List<Post>> getPosts(FeedMode feedMode, User? feedUser) async {
+    if (feedMode == FeedMode.likes) {
+      //いいね
+      return dbManager.getLikePosts(feedUser!.userId);
+    } else if (feedMode == FeedMode.profile) {
+      return dbManager.getPostsByUser(feedUser!.userId);
+    } else {
+      return dbManager.getPosts();
+    }
   }
 
   Future<void> likeIt(Post post, User currentUser) async {

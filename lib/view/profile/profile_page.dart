@@ -28,8 +28,8 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-            onPressed: () => _signOut(context),
-            icon: const FaIcon(FontAwesomeIcons.rightFromBracket),
+            onPressed: () => context.go("/settings"), //_signOut(context),
+            icon: const FaIcon(FontAwesomeIcons.gear),
           ),
         ],
       ),
@@ -74,7 +74,7 @@ class ProfilePage extends StatelessWidget {
                   Center(
                     child: Column(
                       children: <Widget>[
-                        (model.posts == null)
+                        (model.posts == null || model.posts!.isEmpty)
                             ? const Center(child: Text('No Tweets yet.'))
                             : Expanded(
                                 child: ListView.builder(
@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                   Center(
                     child: Column(
                       children: <Widget>[
-                        (model.likePosts == null)
+                        (model.likePosts == null || model.likePosts!.isEmpty)
                             ? const Center(child: Text('No Likes yet.'))
                             : Expanded(
                                 child: ListView.builder(

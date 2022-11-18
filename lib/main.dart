@@ -11,6 +11,9 @@ import 'package:twitter_clone/view_models/login_view_model.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'view/likes/likes_page.dart';
+import 'view/profile/screens/change_email_screen.dart';
+import 'view/profile/screens/change_password_screen.dart';
+import 'view/profile/screens/setting_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,9 +69,27 @@ class MyApp extends StatelessWidget {
         },
       ),
       GoRoute(
+        path: "/settings",
+        builder: (BuildContext context, GoRouterState state) {
+          return const SettingScreen();
+        },
+      ),
+      GoRoute(
         path: "/edit_profile",
         builder: (BuildContext context, GoRouterState state) {
           return const EditProfileScreen();
+        },
+      ),
+      GoRoute(
+        path: "/change_email",
+        builder: (BuildContext context, GoRouterState state) {
+          return const ChangeEmailScreen();
+        },
+      ),
+      GoRoute(
+        path: "/change_password",
+        builder: (BuildContext context, GoRouterState state) {
+          return const ChangePasswordScreen();
         },
       ),
     ],

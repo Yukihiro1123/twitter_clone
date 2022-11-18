@@ -5,12 +5,16 @@ import 'package:twitter_clone/view_models/profile_view_model.dart';
 import '../../../data_models/post.dart';
 import '../../../data_models/user.dart';
 import '../../../style.dart';
+import '../../../utils/constants.dart';
+import '../../common/confirm_dialog.dart';
 import '../../common/user_card.dart';
 import '../../timeline/components/timeline_likes_part.dart';
 
 class ProfilePostsPart extends StatelessWidget {
   final Post post;
-  const ProfilePostsPart({super.key, required this.post});
+  final FeedMode feedMode;
+  const ProfilePostsPart(
+      {super.key, required this.post, required this.feedMode});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,7 @@ class ProfilePostsPart extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           final postUser = snapshot.data!;
+          final currentUser = profileViewModel.currentUser;
           return Card(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -32,18 +37,33 @@ class ProfilePostsPart extends StatelessWidget {
                       DateFormat("yyyy-MM-dd-HH:mm").format(post.postDateTime),
                   photoUrl: postUser.photoUrl,
                   trailing: PopupMenuButton(
+                    icon: const Icon(Icons.more_vert),
+                    onSelected: (PostMenu value) =>
+                        _onPopupMenuSelected(context, value),
                     itemBuilder: (BuildContext context) {
-                      return [
-                        const PopupMenuItem(
-                          child: Text("編集"),
-                        ),
-                        const PopupMenuItem(
-                          child: Text("削除"),
-                        ),
-                        const PopupMenuItem(
-                          child: Text("シェア"),
-                        ),
-                      ];
+                      if (postUser.userId == currentUser.userId) {
+                        return [
+                          const PopupMenuItem(
+                            value: PostMenu.EDIT,
+                            child: Text("編集"),
+                          ),
+                          const PopupMenuItem(
+                            value: PostMenu.DELETE,
+                            child: Text("削除"),
+                          ),
+                          const PopupMenuItem(
+                            value: PostMenu.SHARE,
+                            child: Text("シェア"),
+                          ),
+                        ];
+                      } else {
+                        return [
+                          const PopupMenuItem(
+                            value: PostMenu.SHARE,
+                            child: Text("シェア"),
+                          ),
+                        ];
+                      }
                     },
                   ),
                 ),
@@ -62,9 +82,34 @@ class ProfilePostsPart extends StatelessWidget {
             ),
           );
         } else {
-          return Container(child: Text('Hello'));
+          return Container();
         }
       },
     );
+  }
+
+  _onPopupMenuSelected(BuildContext context, PostMenu selectedMenu) {
+    switch (selectedMenu) {
+      case PostMenu.EDIT:
+        break;
+      //シェア
+      case PostMenu.SHARE:
+        break;
+      case PostMenu.DELETE:
+        _deletePost(context, post);
+      // showConfirmDialog(
+      //   context: context,
+      //   title: "投稿の削除",
+      //   content: "本当に削除しても良いですか",
+      //   onConfirmed: (isConfirmed) {
+      //     _deletePost(context, post);
+      //   },
+      // );
+    }
+  }
+
+  void _deletePost(BuildContext context, Post post) async {
+    final profileViewModel = context.read<ProfileViewModel>();
+    await profileViewModel.deletePost(post, feedMode);
   }
 }

@@ -73,4 +73,14 @@ class ProfileViewModel extends ChangeNotifier {
     isProcessing = false;
     notifyListeners();
   }
+
+  deletePost(Post post, FeedMode feedMode) async {
+    isProcessing = true;
+    notifyListeners();
+    await postRepository.deletePost(post.postId);
+    await getPosts();
+    await getLikePosts();
+    isProcessing = false;
+    notifyListeners();
+  }
 }

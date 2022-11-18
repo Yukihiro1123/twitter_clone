@@ -15,3 +15,9 @@ enum FeedMode {
   profile, //プロフィール 特定ユーザーのツイート
   timeline, //タイムライン 全てのツイート？
 }
+
+enum PostMenu {
+  EDIT,
+  DELETE,
+  SHARE,
+}

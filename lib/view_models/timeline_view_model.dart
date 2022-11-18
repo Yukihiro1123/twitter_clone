@@ -46,4 +46,13 @@ class TimelineViewModel extends ChangeNotifier {
     await postRepository.unLikeIt(post, currentUser);
     notifyListeners();
   }
+
+  Future<void> deletePost(Post post, FeedMode feedMode) async {
+    isProcessing = true;
+    notifyListeners();
+    await postRepository.deletePost(post.postId);
+    await getPosts();
+    isProcessing = false;
+    notifyListeners();
+  }
 }

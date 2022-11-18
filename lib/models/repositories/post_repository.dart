@@ -70,4 +70,8 @@ class PostRepository {
     }
     return LikeResult(likes: likes, isLikeToThisPost: isLikePost);
   }
+
+  Future<void> deletePost(String postId) async {
+    await dbManager.deletePost(postId);
+  }
 }

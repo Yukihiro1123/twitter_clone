@@ -84,7 +84,9 @@ class ProfilePage extends StatelessWidget {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return ProfilePostsPart(
-                                        post: model.posts![index]);
+                                      post: model.posts![index],
+                                      feedMode: FeedMode.profile,
+                                    );
                                   },
                                 ),
                               ),
@@ -105,7 +107,9 @@ class ProfilePage extends StatelessWidget {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return ProfilePostsPart(
-                                        post: model.likePosts![index]);
+                                      post: model.likePosts![index],
+                                      feedMode: FeedMode.likes,
+                                    );
                                   },
                                 ),
                               ),

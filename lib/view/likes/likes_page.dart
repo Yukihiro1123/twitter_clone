@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../data_models/user.dart';
+import '../../utils/constants.dart';
 import '../../view_models/like_view_model.dart';
 import '../timeline/components/timeline_tile.dart';
 
@@ -38,7 +39,10 @@ class LikesPage extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: model.posts!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return TimelineTile(post: model.posts![index]);
+                    return TimelineTile(
+                      post: model.posts![index],
+                      feedMode: FeedMode.likes,
+                    );
                   },
                 );
         }

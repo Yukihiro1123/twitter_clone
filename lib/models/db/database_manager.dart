@@ -99,11 +99,6 @@ class DatabaseManager {
     await reference.update(updateUser.toMap());
   }
 
-  //いいねしたツイートのみ
-  // Future<List<Post>> getLikePost(String userId) async {
-
-  // }
-
   //プロフィール画面
   Future<List<Post>> getPostsByUser(String userId) async {
     final query = await _db.collection('posts').get();
@@ -145,5 +140,18 @@ class DatabaseManager {
       });
     });
     return results;
+  }
+
+  Future<void> deletePost(String postId) async {
+    //Post
+    final postRef = _db.collection("posts").doc(postId);
+    await postRef.delete();
+    //Like
+    final likeRef =
+        await _db.collection("likes").where("postId", isEqualTo: postId).get();
+    likeRef.docs.forEach((element) async {
+      final ref = _db.collection("likes").doc(element.id);
+      await ref.delete();
+    });
   }
 }

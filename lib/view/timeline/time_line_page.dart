@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/constants.dart';
 import '../../view_models/timeline_view_model.dart';
 import 'components/timeline_tile.dart';
 
@@ -35,7 +36,10 @@ class TimelinePage extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: model.posts!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return TimelineTile(post: model.posts![index]);
+                    return TimelineTile(
+                      post: model.posts![index],
+                      feedMode: FeedMode.timeline,
+                    );
                   },
                 );
         }

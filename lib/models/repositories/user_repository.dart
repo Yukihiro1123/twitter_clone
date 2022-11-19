@@ -74,20 +74,7 @@ class UserRepository {
     // }
   }
 
-  //TODO メールアドレス変更処理
-  Future<bool> changeEmail(String email) async {
-    return false;
-  }
-
-  //TODO パスワード変更処理
-  Future<bool> changePassword(
-    String email,
-    String password,
-    String newPassword,
-  ) async {
-    return false;
-  }
-
+  //上記のデータをUser型に変換
   _convertToFirebaseUser(
       auth.User firebaseUser, String name, String email, String password) {
     return User(
@@ -101,15 +88,52 @@ class UserRepository {
     );
   }
 
+  //サインアウト
   Future<void> signOut() async {
     await _auth.signOut();
     currentUser = null;
+  }
+
+  Future<void> getCurrentUserById(String userId) async {
+    currentUser = await dbManager.getUserInfoFromDbById(userId);
   }
 
   Future<User> getUserById(String userId) async {
     return await dbManager.getUserInfoFromDbById(userId);
   }
 
+  //TODO メールアドレス変更処理
+  Future<void> changeEmail(String emailUpdated, User currentUser) async {
+    try {
+      //This operation is sensitive and requires recent authentication.
+      //Log in again before retrying this request.
+      await _auth.signInWithEmailAndPassword(
+        email: currentUser.email,
+        password: currentUser.password,
+      );
+      //authenticationの方の更新
+      await _auth.currentUser!.updateEmail(emailUpdated);
+      //Firestoreに保存
+      final userBeforeUpdate =
+          await dbManager.getUserInfoFromDbById(currentUser.userId);
+      final updateUser = userBeforeUpdate.copyWith(email: emailUpdated);
+      await dbManager.updateProfile(updateUser);
+      Fluttertoast.showToast(msg: "メールアドレスが更新されました");
+    } catch (error) {
+      Fluttertoast.showToast(msg: error.toString());
+    }
+  }
+
+  //TODO パスワード変更処理
+  Future<bool> changePassword(
+    String email,
+    String password,
+    String newPassword,
+  ) async {
+    return false;
+  }
+
+  //プロフィールの更新
   Future<void> updateProfile(
     User profileUser,
     String nameUpdated,
@@ -132,9 +156,5 @@ class UserRepository {
       bio: bioUpdated,
     );
     await dbManager.updateProfile(updateUser);
-  }
-
-  Future<void> getCurrentUserById(String userId) async {
-    currentUser = await dbManager.getUserInfoFromDbById(userId);
   }
 }

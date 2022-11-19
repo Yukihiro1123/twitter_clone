@@ -55,6 +55,16 @@ class ProfileViewModel extends ChangeNotifier {
     return await userRepository.getUserById(userId);
   }
 
+  deletePost(Post post, FeedMode feedMode) async {
+    isProcessing = true;
+    notifyListeners();
+    await postRepository.deletePost(post.postId);
+    await getPosts();
+    await getLikePosts();
+    isProcessing = false;
+    notifyListeners();
+  }
+
   Future<void> signOut() async {
     await userRepository.signOut();
     notifyListeners();
@@ -70,11 +80,18 @@ class ProfileViewModel extends ChangeNotifier {
     String bioUpdated,
     String photoUrlUpdated,
     bool isImageFromFile,
+    //String? emailUpdated,
+    //String? passwordUpdated,
   ) async {
     isProcessing = true;
     notifyListeners();
     await userRepository.updateProfile(
-        profileUser, nameUpdated, bioUpdated, photoUrlUpdated, isImageFromFile);
+      profileUser,
+      nameUpdated,
+      bioUpdated,
+      photoUrlUpdated,
+      isImageFromFile,
+    );
     //ここまで行うと、タイムラインでは変更が反映されるが、プロフィールページはそうではない
     //変更後にユーザーデータを再取得してstaticに保存
     await userRepository.getCurrentUserById(profileUser.userId);
@@ -83,12 +100,12 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  deletePost(Post post, FeedMode feedMode) async {
+  changeEmail(String emailUpdated) async {
     isProcessing = true;
     notifyListeners();
-    await postRepository.deletePost(post.postId);
-    await getPosts();
-    await getLikePosts();
+    await userRepository.changeEmail(emailUpdated, currentUser);
+    await userRepository.getCurrentUserById(profileUser.userId);
+    profileUser = currentUser;
     isProcessing = false;
     notifyListeners();
   }
@@ -96,16 +113,7 @@ class ProfileViewModel extends ChangeNotifier {
   changePassword(String email, String password, String newPassword) async {
     isProcessing = true;
     notifyListeners();
-    isSuccessful =
-        await userRepository.changePassword(email, password, newPassword);
-    isProcessing = false;
-    notifyListeners();
-  }
-
-  changeEmail(String email) async {
-    isProcessing = true;
-    notifyListeners();
-    isSuccessful = await userRepository.changeEmail(email);
+    await userRepository.changePassword(email, password, newPassword);
     isProcessing = false;
     notifyListeners();
   }

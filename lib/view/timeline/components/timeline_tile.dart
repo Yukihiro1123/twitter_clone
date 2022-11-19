@@ -39,7 +39,7 @@ class TimelineTile extends StatelessWidget {
                 UserCard(
                   onTap: () {
                     //プロフィールページに飛ぶ
-                    print("userId " + post.userId);
+                    //print("userId " + post.userId);
                     context.push("/profile/${post.userId}");
                   },
                   title: postUser.appUserName,

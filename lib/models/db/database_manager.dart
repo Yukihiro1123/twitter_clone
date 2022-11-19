@@ -154,4 +154,48 @@ class DatabaseManager {
       await ref.delete();
     });
   }
+
+  Future<void> follow(User profileUser, User currentUser) async {
+    //フォローする側(currentUser)のfollowingにprofileUserのuserIdを追加
+    await _db
+        .collection("users")
+        .doc(currentUser.userId)
+        .collection("followings")
+        .doc(profileUser.userId)
+        .set({"userId": profileUser.userId});
+    //フォローされる側のfollowersにcurrentUserのuserIdを追加
+    await _db
+        .collection("users")
+        .doc(profileUser.userId)
+        .collection("followers")
+        .doc(currentUser.userId)
+        .set({"userId": profileUser.userId});
+  }
+
+  Future<void> unfollow(User profileUser, User user) async {}
+
+  Future<List<String>> getFollowerUserIds(String userId) async {
+    final query =
+        await _db.collection("users").doc(userId).collection("followers").get();
+    if (query.docs.isEmpty) return [];
+    var userIds = <String>[];
+    query.docs.forEach((id) {
+      userIds.add(id.data()["userId"]);
+    });
+    return userIds;
+  }
+
+  Future<List<String>> getFollowingUserIds(String userId) async {
+    final query = await _db
+        .collection("users")
+        .doc(userId)
+        .collection("followings")
+        .get();
+    if (query.docs.isEmpty) return [];
+    var userIds = <String>[];
+    query.docs.forEach((id) {
+      userIds.add(id.data()['userId']);
+    });
+    return userIds;
+  }
 }

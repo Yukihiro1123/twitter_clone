@@ -159,4 +159,24 @@ class UserRepository {
     );
     await dbManager.updateProfile(updateUser);
   }
+
+  Future<int> getNumberOfFollowers(User profileUser) async {
+    return (await dbManager.getFollowerUserIds(profileUser.userId)).length;
+  }
+
+  Future<int> getNumberOfFollowings(User profileUser) async {
+    return (await dbManager.getFollowingUserIds(profileUser.userId)).length;
+  }
+
+  Future<void> follow(User profileUser) async {
+    if (currentUser != null) {
+      await dbManager.follow(profileUser, currentUser!);
+    }
+  }
+
+  Future<void> unfollow(User profileUser) async {
+    if (currentUser != null) {
+      await dbManager.unfollow(profileUser, currentUser!);
+    }
+  }
 }

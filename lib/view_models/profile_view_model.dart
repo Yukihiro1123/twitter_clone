@@ -15,6 +15,7 @@ class ProfileViewModel extends ChangeNotifier {
 
   bool isProcessing = false;
   bool isSuccessful = false;
+  bool isFollowingProfileUser = false;
   List<Post>? posts = [];
   List<Post>? likePosts = [];
 
@@ -115,6 +116,26 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
     await userRepository.changePassword(email, currentUser);
     isProcessing = false;
+    notifyListeners();
+  }
+
+  Future<int> getNumberOfFollowers() async {
+    return await userRepository.getNumberOfFollowers(profileUser);
+  }
+
+  Future<int> getNumberOfFollowings() async {
+    return await userRepository.getNumberOfFollowings(profileUser);
+  }
+
+  Future<void> follow() async {
+    await userRepository.follow(profileUser);
+    isFollowingProfileUser = true;
+    notifyListeners();
+  }
+
+  Future<void> unfollow() async {
+    await userRepository.unfollow(profileUser);
+    isFollowingProfileUser = false;
     notifyListeners();
   }
 }

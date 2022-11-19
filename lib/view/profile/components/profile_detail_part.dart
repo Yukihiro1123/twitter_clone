@@ -16,6 +16,8 @@ class ProfileDetailPart extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
     final currentUser = profileViewModel.currentUser;
+    final isFollowing = profileViewModel.isFollowingProfileUser;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -30,7 +32,9 @@ class ProfileDetailPart extends StatelessWidget {
                     (selectedUser != null &&
                             selectedUser!.userId != currentUser.userId)
                         //TODO: 他者のページの場合はフォロー/フォロー解除
-                        ? context.push('/edit_profile')
+                        ? isFollowing
+                            ? _unfollow(context)
+                            : _follow(context)
                         //自分のページの場合はプロフィール編集画面へ
                         : context.push('/edit_profile');
                   },
@@ -42,7 +46,9 @@ class ProfileDetailPart extends StatelessWidget {
                   child: (selectedUser != null &&
                           selectedUser!.userId != currentUser.userId)
                       //TODO: 他者のページの場合はフォロー/フォロー解除
-                      ? const Text('フォロー')
+                      ? isFollowing
+                          ? const Text('フォロー解除')
+                          : const Text('フォロー')
                       //自分のページの場合はプロフィール編集画面へ
                       : const Text('プロフィールを編集'))
             ],
@@ -64,5 +70,15 @@ class ProfileDetailPart extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _follow(BuildContext context) {
+    final profileViewModel = context.read<ProfileViewModel>();
+    profileViewModel.follow();
+  }
+
+  _unfollow(BuildContext context) {
+    final profileViewModel = context.read<ProfileViewModel>();
+    profileViewModel.unfollow();
   }
 }

@@ -172,7 +172,22 @@ class DatabaseManager {
         .set({"userId": profileUser.userId});
   }
 
-  Future<void> unfollow(User profileUser, User user) async {}
+  Future<void> unfollow(User profileUser, User currentUser) async {
+    //CurrentUserのfollowingsからpostUserIdを削除する
+    await _db
+        .collection("users")
+        .doc(currentUser.userId)
+        .collection("followings")
+        .doc(profileUser.userId)
+        .delete();
+    //ProfileUserのfollowerからcurrentUserIdを削除
+    await _db
+        .collection("users")
+        .doc(profileUser.userId)
+        .collection("followers")
+        .doc(currentUser.userId)
+        .delete();
+  }
 
   Future<List<String>> getFollowerUserIds(String userId) async {
     final query =

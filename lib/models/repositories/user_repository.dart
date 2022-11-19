@@ -102,7 +102,6 @@ class UserRepository {
     return await dbManager.getUserInfoFromDbById(userId);
   }
 
-  //TODO メールアドレス変更処理
   Future<void> changeEmail(String emailUpdated, User currentUser) async {
     try {
       //This operation is sensitive and requires recent authentication.
@@ -125,12 +124,15 @@ class UserRepository {
   }
 
   //TODO パスワード変更処理
-  Future<bool> changePassword(
-    String email,
-    String password,
-    String newPassword,
-  ) async {
-    return false;
+  Future<void> changePassword(String email, User currentUser) async {
+    try {
+      //パスワード変更メール
+      await _auth.sendPasswordResetEmail(email: email);
+      Fluttertoast.showToast(msg: "パスワード変更メールが送信されました");
+      //Firestoreに保存
+    } catch (error) {
+      Fluttertoast.showToast(msg: error.toString());
+    }
   }
 
   //プロフィールの更新

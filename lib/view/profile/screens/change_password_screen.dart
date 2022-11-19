@@ -14,8 +14,6 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _newPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +30,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const Text('登録されているメールアドレスと古いパスワードを入力してください'),
+              const SizedBox(height: 100),
+              const Text('登録されているメールアドレスを入力してください'),
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(
-                  labelText: "現在のメールアドレス",
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: "古いパスワード",
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _newPasswordController,
-                decoration: const InputDecoration(
-                  labelText: "新しいパスワード",
+                  labelText: "現在のメールアドレス *",
                 ),
               ),
               const SizedBox(height: 10),
@@ -76,10 +61,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   _changePassword(BuildContext context) async {
     final profileViewModel = context.read<ProfileViewModel>();
-    await profileViewModel.changePassword(
-      _emailController.text,
-      _passwordController.text,
-      _newPasswordController.text,
-    );
+    await profileViewModel.changePassword(_emailController.text);
   }
 }

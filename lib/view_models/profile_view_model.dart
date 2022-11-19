@@ -110,10 +110,10 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  changePassword(String email, String password, String newPassword) async {
+  changePassword(String email) async {
     isProcessing = true;
     notifyListeners();
-    await userRepository.changePassword(email, password, newPassword);
+    await userRepository.changePassword(email, currentUser);
     isProcessing = false;
     notifyListeners();
   }

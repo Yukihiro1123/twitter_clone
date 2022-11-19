@@ -74,6 +74,20 @@ class UserRepository {
     // }
   }
 
+  //TODO メールアドレス変更処理
+  Future<bool> changeEmail(String email) async {
+    return false;
+  }
+
+  //TODO パスワード変更処理
+  Future<bool> changePassword(
+    String email,
+    String password,
+    String newPassword,
+  ) async {
+    return false;
+  }
+
   _convertToFirebaseUser(
       auth.User firebaseUser, String name, String email, String password) {
     return User(

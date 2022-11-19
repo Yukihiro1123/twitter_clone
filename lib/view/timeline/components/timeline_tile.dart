@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:twitter_clone/style.dart';
@@ -36,7 +37,11 @@ class TimelineTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 UserCard(
-                  onTap: () => print('Hi'),
+                  onTap: () {
+                    //プロフィールページに飛ぶ
+                    print("userId " + post.userId);
+                    context.push("/profile/${post.userId}");
+                  },
                   title: postUser.appUserName,
                   subTitle:
                       DateFormat("yyyy-MM-dd-HH:mm").format(post.postDateTime),

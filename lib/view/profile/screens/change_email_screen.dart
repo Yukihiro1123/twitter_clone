@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:twitter_clone/style.dart';
 
 import '../../../view_models/profile_view_model.dart';
+import '../../common/confirm_dialog.dart';
 
 class ChangeEmailScreen extends StatefulWidget {
   const ChangeEmailScreen({super.key});
@@ -13,11 +14,11 @@ class ChangeEmailScreen extends StatefulWidget {
 }
 
 class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
+  TextEditingController _newEmailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
     final profileUser = profileViewModel.profileUser;
-    TextEditingController _newEmailController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -46,8 +47,17 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                 ),
               ),
               const SizedBox(height: 30),
-              const ElevatedButton(
-                onPressed: null,
+              ElevatedButton(
+                onPressed: () => showConfirmDialog(
+                  context: context,
+                  title: "パスワードの変更",
+                  content: "変更してもいいですか",
+                  onConfirmed: (isConfirmed) {
+                    if (isConfirmed) {
+                      _changeEmail(context);
+                    }
+                  },
+                ),
                 child: Text('確認メールを送信'),
               )
             ],
@@ -55,5 +65,10 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
         ),
       ),
     );
+  }
+
+  _changeEmail(BuildContext context) async {
+    final profileViewModel = context.read<ProfileViewModel>();
+    await profileViewModel.changeEmail(_newEmailController.text);
   }
 }

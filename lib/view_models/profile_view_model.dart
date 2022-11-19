@@ -14,6 +14,7 @@ class ProfileViewModel extends ChangeNotifier {
   });
 
   bool isProcessing = false;
+  bool isSuccessful = false;
   List<Post>? posts = [];
   List<Post>? likePosts = [];
 
@@ -21,9 +22,17 @@ class ProfileViewModel extends ChangeNotifier {
   //Getterを利用し、UserRepositoryクラスの変数を参照のみ可能とする
   User get currentUser => UserRepository.currentUser!;
 
-  void setProfileUser(User? selectedUser) {
+  void setProfileUser(selectedUser) async {
     //TODO 他者のページの場合と自分のページの場合の場合分け
-    profileUser = currentUser;
+    if (selectedUser != null) {
+      isProcessing = true;
+      profileUser = selectedUser!;
+      notifyListeners();
+      isProcessing = false;
+      notifyListeners();
+    } else {
+      profileUser = currentUser;
+    }
   }
 
   Future<void> getPosts() async {
@@ -80,6 +89,23 @@ class ProfileViewModel extends ChangeNotifier {
     await postRepository.deletePost(post.postId);
     await getPosts();
     await getLikePosts();
+    isProcessing = false;
+    notifyListeners();
+  }
+
+  changePassword(String email, String password, String newPassword) async {
+    isProcessing = true;
+    notifyListeners();
+    isSuccessful =
+        await userRepository.changePassword(email, password, newPassword);
+    isProcessing = false;
+    notifyListeners();
+  }
+
+  changeEmail(String email) async {
+    isProcessing = true;
+    notifyListeners();
+    isSuccessful = await userRepository.changeEmail(email);
     isProcessing = false;
     notifyListeners();
   }

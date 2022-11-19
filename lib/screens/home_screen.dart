@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _pages = [
       const TimelinePage(),
       const LikesPage(),
-      const ProfilePage(),
+      const ProfilePage(isOpenFromProfileScreen: false),
     ];
     super.initState();
   }

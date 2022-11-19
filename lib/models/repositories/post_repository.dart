@@ -17,7 +17,7 @@ class PostRepository {
     final imagePicker = ImagePicker();
     final pickedImage =
         await imagePicker.pickImage(source: ImageSource.gallery);
-    print("The path is ${pickedImage?.path}");
+    //print("The path is ${pickedImage?.path}");
     return (pickedImage != null) ? File(pickedImage.path) : null;
   }
 

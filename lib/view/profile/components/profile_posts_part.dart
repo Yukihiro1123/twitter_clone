@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:twitter_clone/view_models/profile_view_model.dart';
@@ -6,7 +7,7 @@ import '../../../data_models/post.dart';
 import '../../../data_models/user.dart';
 import '../../../style.dart';
 import '../../../utils/constants.dart';
-import '../../common/confirm_dialog.dart';
+
 import '../../common/user_card.dart';
 import '../../timeline/components/timeline_likes_part.dart';
 
@@ -31,7 +32,6 @@ class ProfilePostsPart extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 UserCard(
-                  onTap: () => print('Hi'),
                   title: postUser.appUserName,
                   subTitle:
                       DateFormat("yyyy-MM-dd-HH:mm").format(post.postDateTime),

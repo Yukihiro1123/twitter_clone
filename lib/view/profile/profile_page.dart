@@ -10,27 +10,43 @@ import 'components/profile_detail_part.dart';
 import 'components/profile_posts_part.dart';
 
 class ProfilePage extends StatelessWidget {
+  final bool isOpenFromProfileScreen;
   final User? selectedUser;
 
   const ProfilePage({
     super.key,
+    required this.isOpenFromProfileScreen,
     this.selectedUser,
   });
 
   @override
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
+    final currentUser = profileViewModel.currentUser;
     profileViewModel.setProfileUser(selectedUser);
     Future(() => profileViewModel.getPosts());
     Future(() => profileViewModel.getLikePosts());
 
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: (!isOpenFromProfileScreen) ? 0.0 : 56.0,
+        leading: (!isOpenFromProfileScreen)
+            ? Container()
+            : IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  context.pop();
+                },
+              ),
         actions: <Widget>[
-          IconButton(
-            onPressed: () => context.go("/settings"), //_signOut(context),
-            icon: const FaIcon(FontAwesomeIcons.gear),
-          ),
+          //TODO
+          (selectedUser != null && selectedUser!.userId == currentUser.userId ||
+                  !isOpenFromProfileScreen)
+              ? IconButton(
+                  onPressed: () => context.go("/settings"),
+                  icon: const FaIcon(FontAwesomeIcons.gear),
+                )
+              : Container(),
         ],
       ),
       body: Consumer<ProfileViewModel>(
@@ -46,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                       [
                         Container(
                           color: Colors.white,
-                          child: const ProfileDetailPart(),
+                          child: ProfileDetailPart(selectedUser: selectedUser),
                         )
                       ],
                     ),
@@ -128,12 +144,6 @@ class ProfilePage extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  void _signOut(BuildContext context) async {
-    final profileViewModel = context.read<ProfileViewModel>();
-    await profileViewModel.signOut();
-    context.go('/login');
   }
 }
 

@@ -20,7 +20,7 @@ class FollowScreen extends StatelessWidget {
       body: Consumer<FollowViewModel>(
         builder: (_, model, child) {
           return model.followUser.isEmpty
-              ? Container(child: Text("No $mode yet."))
+              ? Container(child: Center(child: Text("No $mode yet.")))
               : ListView.builder(
                   itemCount: model.followUser.length,
                   itemBuilder: (context, int index) {

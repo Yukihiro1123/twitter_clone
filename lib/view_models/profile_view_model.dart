@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/models/repositories/post_repository.dart';
+import '../data_models/like.dart';
 import '../data_models/post.dart';
 import '../data_models/user.dart';
 import '../models/repositories/user_repository.dart';
@@ -136,6 +137,20 @@ class ProfileViewModel extends ChangeNotifier {
   Future<void> unfollow() async {
     await userRepository.unfollow(profileUser);
     isFollowingProfileUser = false;
+    notifyListeners();
+  }
+
+  Future<LikeResult> getLikeResult(String postId) async {
+    return await postRepository.getLikeResult(postId, currentUser);
+  }
+
+  Future<void> likeIt(Post post) async {
+    await postRepository.likeIt(post, currentUser);
+    notifyListeners();
+  }
+
+  Future<void> unlikeIt(Post post) async {
+    await postRepository.unLikeIt(post, currentUser);
     notifyListeners();
   }
 }

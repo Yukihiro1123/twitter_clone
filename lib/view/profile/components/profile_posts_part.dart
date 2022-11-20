@@ -10,6 +10,7 @@ import '../../../utils/constants.dart';
 
 import '../../common/user_card.dart';
 import '../../timeline/components/timeline_likes_part.dart';
+import 'profile_likes_part.dart';
 
 class ProfilePostsPart extends StatelessWidget {
   final Post post;
@@ -74,7 +75,7 @@ class ProfilePostsPart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(post.tweetText, style: postCaptionTextStyle),
-                      TimelineLikesPart(postUser: postUser, post: post),
+                      ProfileLikesPart(postUser: postUser, post: post),
                     ],
                   ),
                 ),

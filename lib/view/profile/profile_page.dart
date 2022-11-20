@@ -89,6 +89,7 @@ class ProfilePage extends StatelessWidget {
                 children: <Widget>[
                   Center(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         (model.posts == null || model.posts!.isEmpty)
                             ? const Center(child: Text('No Tweets yet.'))
@@ -112,6 +113,7 @@ class ProfilePage extends StatelessWidget {
                   //いいね
                   Center(
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         (model.likePosts == null || model.likePosts!.isEmpty)
                             ? const Center(child: Text('No Likes yet.'))

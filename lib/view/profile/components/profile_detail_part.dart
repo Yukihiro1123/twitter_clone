@@ -61,9 +61,9 @@ class ProfileDetailPart extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  ProfileBio(),
-                  SizedBox(height: 10),
+                children: <Widget>[
+                  ProfileBio(profileUser: selectedUser!),
+                  const SizedBox(height: 10),
                   ProfileRecords(),
                 ]),
           ),

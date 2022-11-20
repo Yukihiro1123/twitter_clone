@@ -51,6 +51,7 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Consumer<ProfileViewModel>(
         builder: (context, model, child) {
+          final profileUser = model.profileUser;
           return DefaultTabController(
             length: 2,
             child: NestedScrollView(
@@ -62,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                       [
                         Container(
                           color: Colors.white,
-                          child: ProfileDetailPart(selectedUser: selectedUser),
+                          child: ProfileDetailPart(selectedUser: profileUser),
                         )
                       ],
                     ),

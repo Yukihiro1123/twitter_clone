@@ -1,15 +1,16 @@
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
+import '../../../data_models/user.dart';
 import '../../../view_models/profile_view_model.dart';
 
 class ProfileBio extends StatelessWidget {
-  const ProfileBio({super.key});
+  final User profileUser;
+  const ProfileBio({super.key, required this.profileUser});
 
   @override
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
-    final profileUser = profileViewModel.profileUser;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Column(

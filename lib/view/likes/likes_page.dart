@@ -7,15 +7,16 @@ import '../../data_models/user.dart';
 import '../../utils/constants.dart';
 import '../../view_models/like_view_model.dart';
 import '../timeline/components/timeline_tile.dart';
+import 'components/like_tile.dart';
 
 class LikesPage extends StatelessWidget {
-  final User? selectedUser;
-  const LikesPage({super.key, this.selectedUser});
+  final User? likeUser;
+  const LikesPage({super.key, this.likeUser});
 
   @override
   Widget build(BuildContext context) {
     final likeViewModel = context.read<LikeViewModel>();
-    likeViewModel.setProfileUser(selectedUser);
+    likeViewModel.setLikeUser(likeUser);
     Future(() => likeViewModel.getPosts());
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +40,7 @@ class LikesPage extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: model.posts!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return TimelineTile(
+                    return LikeTile(
                       post: model.posts![index],
                       feedMode: FeedMode.likes,
                     );

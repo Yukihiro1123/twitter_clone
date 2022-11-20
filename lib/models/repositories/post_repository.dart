@@ -34,7 +34,6 @@ class PostRepository {
 
   Future<List<Post>> getPosts(FeedMode feedMode, User? feedUser) async {
     if (feedMode == FeedMode.likes) {
-      //いいね
       return dbManager.getLikePosts(feedUser!.userId);
     } else if (feedMode == FeedMode.profile) {
       return dbManager.getPostsByUser(feedUser!.userId);

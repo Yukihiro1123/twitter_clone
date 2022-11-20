@@ -50,6 +50,50 @@ class DatabaseManager {
     return results;
   }
 
+  //いいねした投稿を取得
+  Future<List<Post>> getLikePosts(String userId) async {
+    //まずはlikesからユーザーがいいねした投稿を持ってくる
+    final likeIdQuery = await _db
+        .collection("likes")
+        .where("likeUserId", isEqualTo: userId)
+        .get();
+    if (likeIdQuery.docs.isEmpty) return [];
+    var likeIds = <String>[];
+    likeIdQuery.docs.forEach((id) {
+      likeIds.add(id.data()['postId']);
+    });
+
+    final likePostQuery = await _db
+        .collection("posts")
+        .where("postId", whereIn: likeIds) //TODO 10件しか取ってこれない
+        .orderBy("postDateTime", descending: true)
+        .get();
+    if (likePostQuery.docs.isEmpty) return [];
+    var results = <Post>[];
+    likePostQuery.docs.forEach((element) {
+      results.add(Post.fromMap(element.data()));
+    });
+    return results;
+  }
+
+  //プロフィール画面
+  Future<List<Post>> getPostsByUser(String userId) async {
+    final query = await _db.collection('posts').get();
+    if (query.docs.isEmpty) return [];
+    var results = <Post>[];
+    await _db
+        .collection("posts")
+        .where("userId", isEqualTo: userId)
+        .orderBy("postDateTime", descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        results.add(Post.fromMap(element.data()));
+      });
+    });
+    return results;
+  }
+
   Future<void> likeIt(Like like) async {
     await _db.collection("likes").doc(like.likeId).set(like.toMap());
   }
@@ -97,49 +141,6 @@ class DatabaseManager {
   Future<void> updateProfile(User updateUser) async {
     final reference = _db.collection("users").doc(updateUser.userId);
     await reference.update(updateUser.toMap());
-  }
-
-  //プロフィール画面
-  Future<List<Post>> getPostsByUser(String userId) async {
-    final query = await _db.collection('posts').get();
-    if (query.docs.isEmpty) return [];
-    var results = <Post>[];
-    await _db
-        .collection("posts")
-        .where("userId", isEqualTo: userId)
-        .orderBy("postDateTime", descending: true)
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        results.add(Post.fromMap(element.data()));
-      });
-    });
-    return results;
-  }
-
-  //いいねした投稿を取得
-  Future<List<Post>> getLikePosts(String userId) async {
-    var results = <Post>[];
-    //まずはlikesからユーザーがいいねした投稿を持ってくる
-    final query = await _db
-        .collection("likes")
-        .where("likeUserId", isEqualTo: userId)
-        .get();
-    var likeIds = <String>[];
-    query.docs.forEach((id) {
-      likeIds.add(id.data()['postId']);
-    });
-    await _db
-        .collection("posts")
-        .where("postId", whereIn: likeIds) //TODO 10件しか取ってこれない
-        .orderBy("postDateTime", descending: true)
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        results.add(Post.fromMap(element.data()));
-      });
-    });
-    return results;
   }
 
   Future<void> deletePost(String postId) async {

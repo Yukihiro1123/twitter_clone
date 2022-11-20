@@ -30,8 +30,8 @@ class TimelinePage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          return (model.posts == null)
-              ? Container()
+          return (model.posts == null || model.posts!.isEmpty)
+              ? const Center(child: Text('No Tweets yet.'))
               : ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: model.posts!.length,

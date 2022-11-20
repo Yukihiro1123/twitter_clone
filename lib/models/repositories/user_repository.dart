@@ -60,8 +60,8 @@ class UserRepository {
           .user;
       if (firebaseUser == null) return false;
       //Firestoreに保存
-      await dbManager.insertUser(
-          _convertToFirebaseUser(firebaseUser, name, email, password));
+      await dbManager
+          .insertUser(_convertToFirebaseUser(firebaseUser, name, email));
       return true;
     } on auth.FirebaseAuthException catch (e) {
       var message = FirebaseAuthErrorExt.fromCode(e.code).message;
@@ -75,8 +75,7 @@ class UserRepository {
   }
 
   //上記のデータをUser型に変換
-  _convertToFirebaseUser(
-      auth.User firebaseUser, String name, String email, String password) {
+  _convertToFirebaseUser(auth.User firebaseUser, String name, String email) {
     return User(
       userId: firebaseUser.uid,
       displayName: name,

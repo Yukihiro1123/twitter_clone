@@ -10,6 +10,7 @@ import '../utils/constants.dart';
 class LikeViewModel extends ChangeNotifier {
   final UserRepository userRepository;
   final PostRepository postRepository;
+
   LikeViewModel({
     required this.userRepository,
     required this.postRepository,
@@ -20,7 +21,7 @@ class LikeViewModel extends ChangeNotifier {
   User? feedUser;
   User get currentUser => UserRepository.currentUser!;
 
-  void setProfileUser(User? selectedUser) {
+  void setLikeUser(User? selectedUser) {
     feedUser = currentUser;
   }
 
@@ -47,6 +48,15 @@ class LikeViewModel extends ChangeNotifier {
 
   Future<void> unlikeIt(Post post) async {
     await postRepository.unLikeIt(post, currentUser);
+    notifyListeners();
+  }
+
+  Future<void> deletePost(Post post, FeedMode feedMode) async {
+    isProcessing = true;
+    notifyListeners();
+    await postRepository.deletePost(post.postId);
+    await getPosts();
+    isProcessing = false;
     notifyListeners();
   }
 }

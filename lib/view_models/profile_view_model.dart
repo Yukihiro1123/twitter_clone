@@ -101,10 +101,10 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeEmail(String emailUpdated) async {
+  changeEmail(String emailUpdated, String password) async {
     isProcessing = true;
     notifyListeners();
-    await userRepository.changeEmail(emailUpdated, currentUser);
+    await userRepository.changeEmail(emailUpdated, password, currentUser);
     await userRepository.getCurrentUserById(profileUser.userId);
     profileUser = currentUser;
     isProcessing = false;

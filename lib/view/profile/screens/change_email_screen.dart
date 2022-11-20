@@ -15,6 +15,7 @@ class ChangeEmailScreen extends StatefulWidget {
 
 class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
   TextEditingController _newEmailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
@@ -51,6 +52,13 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
                             labelText: "新しいメールアドレス",
                           ),
                         ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
+                            labelText: "パスワード",
+                          ),
+                        ),
                         const SizedBox(height: 30),
                         ElevatedButton(
                           onPressed: () => showConfirmDialog(
@@ -76,6 +84,7 @@ class _ChangeEmailScreenState extends State<ChangeEmailScreen> {
 
   _changeEmail(BuildContext context) async {
     final profileViewModel = context.read<ProfileViewModel>();
-    await profileViewModel.changeEmail(_newEmailController.text);
+    await profileViewModel.changeEmail(
+        _newEmailController.text, _passwordController.text);
   }
 }

@@ -83,7 +83,6 @@ class UserRepository {
       appUserName: name,
       photoUrl: firebaseUser.photoURL ?? "",
       email: email,
-      password: password,
       bio: "",
     );
   }
@@ -102,13 +101,17 @@ class UserRepository {
     return await dbManager.getUserInfoFromDbById(userId);
   }
 
-  Future<void> changeEmail(String emailUpdated, User currentUser) async {
+  Future<void> changeEmail(
+    String emailUpdated,
+    String password,
+    User currentUser,
+  ) async {
     try {
       //This operation is sensitive and requires recent authentication.
       //Log in again before retrying this request.
       await _auth.signInWithEmailAndPassword(
         email: currentUser.email,
-        password: currentUser.password,
+        password: password,
       );
       //authenticationの方の更新
       await _auth.currentUser!.updateEmail(emailUpdated);

@@ -11,7 +11,6 @@ class User {
   //プロフィール画像
   final String photoUrl;
   final String email;
-  final String password;
   //自己紹介
   final String bio;
   User({
@@ -20,7 +19,6 @@ class User {
     required this.appUserName,
     required this.photoUrl,
     required this.email,
-    required this.password,
     required this.bio,
   });
 
@@ -30,7 +28,6 @@ class User {
     String? appUserName,
     String? photoUrl,
     String? email,
-    String? password,
     String? bio,
   }) {
     return User(
@@ -39,7 +36,6 @@ class User {
       appUserName: appUserName ?? this.appUserName,
       photoUrl: photoUrl ?? this.photoUrl,
       email: email ?? this.email,
-      password: password ?? this.password,
       bio: bio ?? this.bio,
     );
   }
@@ -51,7 +47,6 @@ class User {
       'appUserName': appUserName,
       'photoUrl': photoUrl,
       'email': email,
-      'password': password,
       'bio': bio,
     };
   }
@@ -63,7 +58,6 @@ class User {
       appUserName: map['appUserName'] as String,
       photoUrl: map['photoUrl'] as String,
       email: map['email'] as String,
-      password: map['password'] as String,
       bio: map['bio'] as String,
     );
   }
@@ -75,7 +69,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(userId: $userId, displayName: $displayName, appUserName: $appUserName, photoUrl: $photoUrl, email: $email, password: $password, bio: $bio)';
+    return 'User(userId: $userId, displayName: $displayName, appUserName: $appUserName, photoUrl: $photoUrl, email: $email, bio: $bio)';
   }
 
   @override
@@ -87,7 +81,6 @@ class User {
         other.appUserName == appUserName &&
         other.photoUrl == photoUrl &&
         other.email == email &&
-        other.password == password &&
         other.bio == bio;
   }
 
@@ -98,7 +91,6 @@ class User {
         appUserName.hashCode ^
         photoUrl.hashCode ^
         email.hashCode ^
-        password.hashCode ^
         bio.hashCode;
   }
 }

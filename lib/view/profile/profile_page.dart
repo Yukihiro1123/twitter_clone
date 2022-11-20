@@ -50,7 +50,7 @@ class ProfilePage extends StatelessWidget {
           (selectedUser != null && selectedUser!.userId == currentUser.userId ||
                   !isOpenFromProfileScreen)
               ? IconButton(
-                  onPressed: () => context.go("/settings"),
+                  onPressed: () => context.push("/settings"),
                   icon: const FaIcon(FontAwesomeIcons.gear),
                 )
               : Container(),

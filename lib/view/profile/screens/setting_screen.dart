@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/profile_view_model.dart';
+import '../../common/confirm_dialog.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -13,7 +14,7 @@ class SettingScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go("/"),
+          onPressed: () => context.pop(),
         ),
         title: const Text("設定"),
         centerTitle: true,
@@ -37,7 +38,16 @@ class SettingScreen extends StatelessWidget {
           width: double.infinity,
           child: TextButton(
             child: const Text('ログアウト'),
-            onPressed: () => _signOut(context),
+            onPressed: () => showConfirmDialog(
+              context: context,
+              title: "ログアウト",
+              content: "ログアウトしてもいいですか",
+              onConfirmed: (isConfirmed) {
+                if (isConfirmed) {
+                  _signOut(context);
+                }
+              },
+            ),
           ),
         ),
       ]),

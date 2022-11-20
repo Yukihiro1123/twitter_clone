@@ -106,16 +106,14 @@ class TimelineTile extends StatelessWidget {
       case PostMenu.SHARE:
         break;
       case PostMenu.DELETE:
-        _deletePost(context, post);
-      // showConfirmDialog(
-      //   context: context,
-      //   title: "投稿の削除",
-      //   content: "本当に削除しても良いですか",
-      //   onConfirmed: (isConfirmed) {
-      //     _deletePost(context, post);
-      //   },
-      // );
-
+        showConfirmDialog(
+          context: context,
+          title: "投稿の削除",
+          content: "本当に削除しても良いですか",
+          onConfirmed: (isConfirmed) {
+            _deletePost(context, post);
+          },
+        );
     }
   }
 

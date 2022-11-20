@@ -13,7 +13,8 @@ import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/profile_screen.dart';
 
-import 'view/followers/follow_screen.dart';
+import 'screens/register_done_screen.dart';
+import 'view/follows/follow_screen.dart';
 import 'view/profile/screens/change_email_screen.dart';
 import 'view/profile/screens/change_password_screen.dart';
 import 'view/profile/screens/setting_screen.dart';
@@ -58,6 +59,12 @@ class MyApp extends StatelessWidget {
         path: '/login',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginScreen();
+        },
+      ),
+      GoRoute(
+        path: '/register_done',
+        builder: (BuildContext context, GoRouterState state) {
+          return const RegisterDoneScreen();
         },
       ),
       //投稿フォーム

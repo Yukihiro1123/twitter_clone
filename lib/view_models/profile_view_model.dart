@@ -19,12 +19,17 @@ class ProfileViewModel extends ChangeNotifier {
   bool isFollowingProfileUser = false;
   List<Post>? posts = [];
   List<Post>? likePosts = [];
-
+  //List<String> popProfileUserIds = [];
+  //String popProfileUserId = "";
   late User profileUser;
   //Getterを利用し、UserRepositoryクラスの変数を参照のみ可能とする
   User get currentUser => UserRepository.currentUser!;
 
-  void setProfileUser(selectedUser) async {
+  void setProfileUser(
+    selectedUser,
+    //String popProfileUserId
+  ) async {
+    //if (popProfileUserId != null) popProfileUserIds.add(popProfileUserId);
     //TODO 他者のページの場合と自分のページの場合の場合分け
     if (selectedUser != null) {
       isProcessing = true;
@@ -102,7 +107,7 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeEmail(String emailUpdated, String password) async {
+  Future<void> changeEmail(String emailUpdated, String password) async {
     isProcessing = true;
     notifyListeners();
     await userRepository.changeEmail(emailUpdated, password, currentUser);
@@ -112,7 +117,7 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  changePassword(String email) async {
+  Future<void> changePassword(String email) async {
     isProcessing = true;
     notifyListeners();
     await userRepository.changePassword(email, currentUser);
@@ -153,4 +158,15 @@ class ProfileViewModel extends ChangeNotifier {
     await postRepository.unLikeIt(post, currentUser);
     notifyListeners();
   }
+
+  // void popProfileUser() async {
+  //   if (popProfileUserIds.isNotEmpty) {
+  //     popProfileUserId = popProfileUserIds.last;
+  //     popProfileUserIds.removeLast();
+  //     profileUser = await userRepository.getUserById(popProfileUserId);
+  //   } else {
+  //     profileUser = currentUser;
+  //   }
+  //   getPost();
+  // }
 }

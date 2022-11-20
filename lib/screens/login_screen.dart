@@ -193,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       if (!mounted) return;
-      context.go('/');
+      context.go('/register_done');
     } else {
       Fluttertoast.showToast(msg: "パスワードが一致しません");
       return;

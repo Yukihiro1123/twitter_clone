@@ -15,6 +15,7 @@ class FollowScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final followViewModel = context.read<FollowViewModel>();
     Future(() => followViewModel.getFollowUsers(id, mode));
+    //ScaffoldをConsumerで囲む
     return Scaffold(
       appBar: AppBar(title: Text(_titleText(context, mode))),
       body: Consumer<FollowViewModel>(

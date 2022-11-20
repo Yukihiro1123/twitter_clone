@@ -5,6 +5,7 @@ import '../models/repositories/user_repository.dart';
 
 class FollowViewModel extends ChangeNotifier {
   final UserRepository userRepository;
+  //final WhoCaresMeMode mode;
   FollowViewModel({required this.userRepository});
 
   List<User> followUser = [];
@@ -15,4 +16,8 @@ class FollowViewModel extends ChangeNotifier {
     followUser = await userRepository.getFollowUsers(id, mode);
     notifyListeners();
   }
+  // void rebuildAfterPop(String popProfileUserId) {
+  //   getCaresMeUsers(popProfileUserId, whoCaresMeMode);
+
+  // }
 }

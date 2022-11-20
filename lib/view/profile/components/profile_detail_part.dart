@@ -64,7 +64,7 @@ class ProfileDetailPart extends StatelessWidget {
                 children: <Widget>[
                   ProfileBio(profileUser: selectedUser!),
                   const SizedBox(height: 10),
-                  ProfileRecords(),
+                  const ProfileRecords(),
                 ]),
           ),
         ),

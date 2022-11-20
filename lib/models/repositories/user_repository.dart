@@ -35,8 +35,17 @@ class UserRepository {
       ))
           .user;
       if (firebaseUser == null) return false;
+      final isVerified = firebaseUser.emailVerified;
+      if (!isVerified) {
+        // もう一度メール送信
+        firebaseUser.sendEmailVerification();
+        // サインアウトする
+        await _auth.signOut();
+        Fluttertoast.showToast(msg: "メールアドレスが認証されていませんん");
+      }
       //ユーザーが存在するか確認
       currentUser = await dbManager.getUserInfoFromDbById(firebaseUser.uid);
+
       return true;
     } on auth.FirebaseAuthException catch (e) {
       var message = FirebaseAuthErrorExt.fromCode(e.code).message;
@@ -59,6 +68,8 @@ class UserRepository {
       ))
           .user;
       if (firebaseUser == null) return false;
+      //確認メールの送信
+      await firebaseUser.sendEmailVerification();
       //Firestoreに保存
       await dbManager
           .insertUser(_convertToFirebaseUser(firebaseUser, name, email));
@@ -125,13 +136,11 @@ class UserRepository {
     }
   }
 
-  //TODO パスワード変更処理
   Future<void> changePassword(String email, User currentUser) async {
     try {
       //パスワード変更メール
       await _auth.sendPasswordResetEmail(email: email);
       Fluttertoast.showToast(msg: "パスワード変更メールが送信されました");
-      //Firestoreに保存
     } catch (error) {
       Fluttertoast.showToast(msg: error.toString());
     }

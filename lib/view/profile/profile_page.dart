@@ -12,18 +12,23 @@ import 'components/profile_posts_part.dart';
 class ProfilePage extends StatelessWidget {
   final bool isOpenFromProfileScreen;
   final User? selectedUser;
+  //final String? popProfileUserId;
 
   const ProfilePage({
     super.key,
     required this.isOpenFromProfileScreen,
     this.selectedUser,
+    //this.popProfileUserId,
   });
 
   @override
   Widget build(BuildContext context) {
     final profileViewModel = context.read<ProfileViewModel>();
     final currentUser = profileViewModel.currentUser;
-    profileViewModel.setProfileUser(selectedUser);
+    profileViewModel.setProfileUser(
+      selectedUser,
+      //popProfileUserId,
+    );
     Future(() => profileViewModel.getPosts());
     Future(() => profileViewModel.getLikePosts());
 
@@ -35,6 +40,8 @@ class ProfilePage extends StatelessWidget {
             : IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
+                  //profileViewModel.popProfileUser();
+                  //_popWithRebuildFollowSdcreen(context, model.popProfileUserId);
                   context.pop();
                 },
               ),
@@ -86,6 +93,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ];
               },
+              //ツイート
               body: TabBarView(
                 children: <Widget>[
                   Center(
@@ -148,6 +156,13 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  // void _popWithRebuildFollowSdcreen(BuildContext context, popProfileUserId) {
+  //      BuildContext context, String popProfileUserId) {
+  //   final whoCaresMeViewModel = context.read<WhoCaresMeViewModel>();
+  //   whoCaresMeViewModel.rebuildAfterPop(popProfileUserId);
+  //   Navigator.pop(context);
+  // }
 }
 
 class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {

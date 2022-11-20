@@ -9,7 +9,6 @@ import '../../../style.dart';
 import '../../../utils/constants.dart';
 
 import '../../common/user_card.dart';
-import '../../timeline/components/timeline_likes_part.dart';
 import 'profile_likes_part.dart';
 
 class ProfilePostsPart extends StatelessWidget {

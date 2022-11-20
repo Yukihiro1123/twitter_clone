@@ -87,7 +87,6 @@ class TweetFormScreen extends StatelessWidget {
     });
   }
 
-//TODO ツイート投稿処理
   void _post(BuildContext context) async {
     final postViewModel = context.read<PostViewModel>();
     await postViewModel.post();

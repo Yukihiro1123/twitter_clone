@@ -7,9 +7,11 @@ import '../view_models/profile_view_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   final String userId;
+  //final String popProfileUserId;
   const ProfileScreen({
     super.key,
     required this.userId,
+    //required this.popProfileUserId,
   });
 
   @override
@@ -24,6 +26,7 @@ class ProfileScreen extends StatelessWidget {
           return ProfilePage(
             selectedUser: profileUser,
             isOpenFromProfileScreen: true,
+            //popProfileUserId: popProfileUserId,
           );
         } else {
           return Container();

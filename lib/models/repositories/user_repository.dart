@@ -179,4 +179,17 @@ class UserRepository {
       await dbManager.unfollow(profileUser, currentUser!);
     }
   }
+
+  Future<List<User>> getFollowUsers(String id, String mode) async {
+    var results = <User>[];
+    switch (mode) {
+      case "followers":
+        results = await dbManager.getFollowerUsers(id);
+        break;
+      case "followings":
+        results = await dbManager.getFollowingUsers(id);
+        break;
+    }
+    return results;
+  }
 }

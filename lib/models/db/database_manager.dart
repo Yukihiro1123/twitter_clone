@@ -213,4 +213,24 @@ class DatabaseManager {
     });
     return userIds;
   }
+
+  Future<List<User>> getFollowerUsers(String id) async {
+    final followerUserIds = await getFollowerUserIds(id);
+    var followerUsers = <User>[];
+    await Future.forEach(followerUserIds, (String followerUserId) async {
+      final user = await getUserInfoFromDbById(followerUserId);
+      followerUsers.add(user);
+    });
+    return followerUsers;
+  }
+
+  Future<List<User>> getFollowingUsers(String id) async {
+    final followingUserIds = await getFollowingUserIds(id);
+    var followingUsers = <User>[];
+    await Future.forEach(followingUserIds, (String followerUserId) async {
+      final user = await getUserInfoFromDbById(followerUserId);
+      followingUsers.add(user);
+    });
+    return followingUsers;
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+import 'package:twitter_clone/view_models/follow_view_model.dart';
 import 'package:twitter_clone/view_models/timeline_view_model.dart';
 
 import '../models/db/database_manager.dart';
@@ -67,6 +68,11 @@ List<SingleChildWidget> viewModels = [
     create: (context) => LikeViewModel(
       userRepository: context.read<UserRepository>(),
       postRepository: context.read<PostRepository>(),
+    ),
+  ),
+  ChangeNotifierProvider<FollowViewModel>(
+    create: (context) => FollowViewModel(
+      userRepository: context.read<UserRepository>(),
     ),
   ),
 ];

@@ -13,6 +13,7 @@ import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/profile_screen.dart';
 
+import 'view/followers/follow_screen.dart';
 import 'view/profile/screens/change_email_screen.dart';
 import 'view/profile/screens/change_password_screen.dart';
 import 'view/profile/screens/setting_screen.dart';
@@ -73,6 +74,18 @@ class MyApp extends StatelessWidget {
           final String userId = state.params['user_id']!;
           return ProfileScreen(
             userId: userId,
+          );
+        },
+      ),
+      //フォローリスト
+      GoRoute(
+        path: "/profile/:user_id/:mode",
+        builder: (BuildContext context, GoRouterState state) {
+          final String userId = state.params['user_id']!;
+          final String mode = state.params["mode"]!;
+          return FollowScreen(
+            id: userId,
+            mode: mode,
           );
         },
       ),

@@ -33,6 +33,7 @@ class ProfileViewModel extends ChangeNotifier {
     if (selectedUser != null) {
       profileUser = selectedUser!;
       checkIsFollowing();
+      getNumberOfFollowers();
     } else {
       profileUser = currentUser;
     }

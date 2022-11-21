@@ -46,7 +46,6 @@ class ProfilePage extends StatelessWidget {
                 },
               ),
         actions: <Widget>[
-          //TODO
           (selectedUser != null && selectedUser!.userId == currentUser.userId ||
                   !isOpenFromProfileScreen)
               ? IconButton(

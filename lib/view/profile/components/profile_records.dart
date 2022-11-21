@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:twitter_clone/style.dart';
 
+import '../../../data_models/user.dart';
 import '../../../view_models/profile_view_model.dart';
 
 class ProfileRecords extends StatelessWidget {

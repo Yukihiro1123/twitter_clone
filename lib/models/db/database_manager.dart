@@ -56,6 +56,7 @@ class DatabaseManager {
     final likeIdQuery = await _db
         .collection("likes")
         .where("likeUserId", isEqualTo: userId)
+        .orderBy("likeDateTime", descending: true)
         .get();
     if (likeIdQuery.docs.isEmpty) return [];
     var likeIds = <String>[];
@@ -66,7 +67,6 @@ class DatabaseManager {
     final likePostQuery = await _db
         .collection("posts")
         .where("postId", whereIn: likeIds) //TODO 10件しか取ってこれない
-        .orderBy("postDateTime", descending: true)
         .get();
     if (likePostQuery.docs.isEmpty) return [];
     var results = <Post>[];
@@ -163,14 +163,20 @@ class DatabaseManager {
         .doc(currentUser.userId)
         .collection("followings")
         .doc(profileUser.userId)
-        .set({"userId": profileUser.userId});
+        .set({
+      "userId": profileUser.userId,
+      "followDateTime": DateTime.now().millisecondsSinceEpoch
+    });
     //フォローされる側のfollowersにcurrentUserのuserIdを追加
     await _db
         .collection("users")
         .doc(profileUser.userId)
         .collection("followers")
         .doc(currentUser.userId)
-        .set({"userId": profileUser.userId});
+        .set({
+      "userId": currentUser.userId,
+      "followDateTime": DateTime.now().millisecondsSinceEpoch
+    });
   }
 
   Future<void> unfollow(User profileUser, User currentUser) async {
@@ -191,8 +197,12 @@ class DatabaseManager {
   }
 
   Future<List<String>> getFollowerUserIds(String userId) async {
-    final query =
-        await _db.collection("users").doc(userId).collection("followers").get();
+    final query = await _db
+        .collection("users")
+        .doc(userId)
+        .collection("followers")
+        .orderBy("followDateTime", descending: true)
+        .get();
     if (query.docs.isEmpty) return [];
     var userIds = <String>[];
     query.docs.forEach((id) {
@@ -206,6 +216,7 @@ class DatabaseManager {
         .collection("users")
         .doc(userId)
         .collection("followings")
+        .orderBy("followDateTime", descending: true)
         .get();
     if (query.docs.isEmpty) return [];
     var userIds = <String>[];
@@ -233,5 +244,25 @@ class DatabaseManager {
       followingUsers.add(user);
     });
     return followingUsers;
+  }
+
+  Future<bool> checkIsFollowing(User profileUser, User currentUser) async {
+    final query = await _db
+        .collection('users')
+        .doc(currentUser.userId)
+        .collection("followings")
+        .get();
+    if (query.docs.isEmpty) return false;
+    final checkQuery = await _db
+        .collection("users")
+        .doc(currentUser.userId)
+        .collection("followings")
+        .where("userId", isEqualTo: profileUser.userId)
+        .get();
+    if (checkQuery.docs.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

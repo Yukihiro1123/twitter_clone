@@ -30,13 +30,9 @@ class ProfileViewModel extends ChangeNotifier {
     //String popProfileUserId
   ) async {
     //if (popProfileUserId != null) popProfileUserIds.add(popProfileUserId);
-    //TODO 他者のページの場合と自分のページの場合の場合分け
     if (selectedUser != null) {
-      isProcessing = true;
       profileUser = selectedUser!;
-      notifyListeners();
-      isProcessing = false;
-      notifyListeners();
+      checkIsFollowing();
     } else {
       profileUser = currentUser;
     }
@@ -136,6 +132,7 @@ class ProfileViewModel extends ChangeNotifier {
   Future<void> follow() async {
     await userRepository.follow(profileUser);
     isFollowingProfileUser = true;
+
     notifyListeners();
   }
 
@@ -156,6 +153,12 @@ class ProfileViewModel extends ChangeNotifier {
 
   Future<void> unlikeIt(Post post) async {
     await postRepository.unLikeIt(post, currentUser);
+    notifyListeners();
+  }
+
+  Future<void> checkIsFollowing() async {
+    isFollowingProfileUser = await userRepository.checkIsFollowing(profileUser);
+    print("isFollwingProfileUser: $isFollowingProfileUser");
     notifyListeners();
   }
 

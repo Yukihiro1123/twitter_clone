@@ -203,4 +203,10 @@ class UserRepository {
     }
     return results;
   }
+
+  Future<bool> checkIsFollowing(User profileUser) async {
+    return (currentUser != null)
+        ? await dbManager.checkIsFollowing(profileUser, currentUser!)
+        : false;
+  }
 }

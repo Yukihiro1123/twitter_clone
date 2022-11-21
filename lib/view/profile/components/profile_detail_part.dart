@@ -26,12 +26,11 @@ class ProfileDetailPart extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const ProfileImage(),
+              ProfileImage(profileUser: selectedUser!),
               ElevatedButton(
                   onPressed: () {
                     (selectedUser != null &&
                             selectedUser!.userId != currentUser.userId)
-                        //TODO: 他者のページの場合はフォロー/フォロー解除
                         ? isFollowing
                             ? _unfollow(context)
                             : _follow(context)
@@ -45,7 +44,6 @@ class ProfileDetailPart extends StatelessWidget {
                   ),
                   child: (selectedUser != null &&
                           selectedUser!.userId != currentUser.userId)
-                      //TODO: 他者のページの場合はフォロー/フォロー解除
                       ? isFollowing
                           ? const Text('フォロー解除')
                           : const Text('フォロー')
